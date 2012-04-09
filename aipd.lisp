@@ -80,7 +80,7 @@
       (:div
        (:h2 "What do you do?")
        (:form :action "player1-choose" :method :post
-              (:input :type :hidden :name "username" :value (cl-who:str username))
+              (:input :type :hidden :name "username" :value username)
               (:input :type :submit :name "cooperate" :value "cooperate")
               (:input :type :submit :name "defect" :value "defect")))))))
     
@@ -110,7 +110,7 @@
          (:input :type :submit :name "defect" :value "defect")))))))
 
 (hunchentoot:define-easy-handler (player2-choose :uri "/aipd/player2-choose") (id cooperate defect)
-  (let*((challenge (find id *challenges* :key 'id))
+  (let*((challenge (find (read-from-string id) *challenges* :key 'id))
         (player1 (player1 challenge))
         (player2 (player2 challenge))
         (player1-choice
@@ -120,7 +120,7 @@
            (cooperate :cooperate)
            (defect :defect)
            (t (error "Trying to take a third option.")))))
-    (setf *challenges* (delete id *challenges* :key 'id))
+    (setf *challenges* (delete (read-from-string id) *challenges* :key 'id))
     (ecase player1-choice
       (:cooperate
        (ecase player2-choice
