@@ -50,9 +50,8 @@
         (:title "Asynchonous Iterated Prisoner's Dilemma"))
        (:body
         (:div
-         (:h2 (multiple-value-bind (years months) (floor (sentence user) 12)
-                (cl-who:fmt "You are sentenced to ~A years ~A months hard time"
-                            years months))))
+         (:h2 (cl-who:fmt "You have ~A points."
+                            (points user))))
         (:div
          (:h2 (cl-who:fmt "You have ~A challengers" (length challenges)))
          (:ul
@@ -125,15 +124,17 @@
       (:cooperate
        (ecase player2-choice
          (:cooperate
-          (incf (sentence player1) 1)
-          (incf (sentence player2) 1))
+          (incf (points player1) 12)
+          (incf (points player2) 12))
          (:defect
-          (incf (sentence player1) 12))))
+          (incf (points player1) 1)
+          (incf (points player2) 13))))
       (:defect
        (ecase player2-choice
          (:cooperate
-          (incf (sentence player2) 12))
+          (incf (points player1) 13)
+          (incf (points player2) 1))
          (:defect
-          (incf (sentence player1) 3)
-          (incf (sentence player2) 3)))))
+          (incf (points player1) 10)
+          (incf (points player2) 10)))))
     (hunchentoot:redirect "/aipd/home")))

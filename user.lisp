@@ -11,12 +11,11 @@
     :accessor password-hash
     :initarg :password-hash
     :type string)
-   (sentence
-    :accessor sentence
-    :initarg :sentence
+   (points
+    :accessor points
+    :initarg :points
     :initform 0
-    :type (integer 0)
-    :documentation "in months")
+    :type (integer 0))
    (seen
     :accessor seen
     :initarg :seen
